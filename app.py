@@ -4,7 +4,7 @@ from datetime import date  # Importo a função date pra pegar a data atual
 import os  # Importo o módulo os para verificar se um arquivo existe no computador
 
 # Defino o nome do arquivo onde vou salvar os dados no formato CSV
-progresso = "meus_estudos.csv"
+progresso = f"{usuario}_estudos.csv"
 
 # Verifico se o arquivo com os dados já existe na pasta do projeto
 if os.path.exists(progresso):
@@ -24,6 +24,14 @@ else:
 
 # título da página no app
 st.title("Bem vindo!")
+
+#novo bloco para identificar o usuario
+usuario = st.text_input("digite o seu nome de usuário para acessar o seu progresso")
+if not usuario:
+    st.warning("por favor, digite o seu nome de usuario para continuar")
+    st.stop()
+                        
+                        
 # mensagem de boas-vindas com markdown
 st.markdown("Seja bem-vindo ao seu painel de progresso!")
 # Insiro uma linha horizontal para separar 
@@ -195,3 +203,4 @@ st.markdown("---")
 
 # mostrar um gráfico de barras com o total de minutos por matéria para visualizar o progresso
 st.bar_chart(df_grouped)
+
