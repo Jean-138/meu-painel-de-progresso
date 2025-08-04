@@ -3,6 +3,13 @@ import pandas as pd     # Importo o pandas para manipular dados em tabelas (Data
 from datetime import date  # Importo a função date pra pegar a data atual
 import os  # Importo o módulo os para verificar se um arquivo existe no computador
 
+
+# novo bloco para identificar o usuario
+usuario = st.text_input("Digite o seu nome de usuário para acessar o seu progresso")
+if not usuario:
+    st.warning("Por favor, digite o seu nome de usuário para continuar")
+    st.stop()
+
 # Defino o nome do arquivo onde vou salvar os dados no formato CSV
 progresso = f"{usuario}_estudos.csv"
 
@@ -25,13 +32,6 @@ else:
 # título da página no app
 st.title("Bem vindo!")
 
-#novo bloco para identificar o usuario
-usuario = st.text_input("digite o seu nome de usuário para acessar o seu progresso")
-if not usuario:
-    st.warning("por favor, digite o seu nome de usuario para continuar")
-    st.stop()
-                        
-                        
 # mensagem de boas-vindas com markdown
 st.markdown("Seja bem-vindo ao seu painel de progresso!")
 # Insiro uma linha horizontal para separar 
@@ -78,7 +78,8 @@ if salvar_entrada:
         df = pd.DataFrame(lista)
 
         # Salvo o DataFrame atualizado no arquivo CSV para guardar os dados permanentemente
-        df.to_csv("meus_estudos.csv", index=False) # index=false esconde os números de índice (numeração das linhas
+        df.to_csv(progresso, index=False)
+ # index=false esconde os números de índice (numeração das linhas
     else:
         # Se algum campo está errado ou vazio, uma mensagem de erro 
         st.write("Por favor, preencha os campos corretamente.")
@@ -174,10 +175,12 @@ def limpar_tudo():
     # Limpa a lista de datas dos estudos
     st.session_state["lista_datas"].clear()
     
+      
     # se o arquivo CSV existe no diretório atual
-    if os.path.exists("meus_estudos.csv"):
+    if os.path.exists(progresso):
         # Remove o arquivo CSV para apagar os dados salvos
-        os.remove("meus_estudos.csv")
+        os.remove(progresso)
+
     
     # Recarrega o app Streamlit para aplicar as alterações
     st.rerun()
@@ -203,4 +206,5 @@ st.markdown("---")
 
 # mostrar um gráfico de barras com o total de minutos por matéria para visualizar o progresso
 st.bar_chart(df_grouped)
+
 
